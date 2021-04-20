@@ -11,10 +11,10 @@ module.exports = {
     rejectUnauthorized: false,
   },
   entities: [
-    "src/database/models/**.ts",
+    "dist/database/models/**.js",
   ],
   migrations: [
-    "src/database/migrations/**.ts",
+    "dist/database/migrations/**.js",
   ],
   cli: {
     migrationsDir: "src/database/migrations",

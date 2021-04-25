@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { getCustomRepository } from "typeorm";
-import { AdminRepository } from "../repositories/AdminRespository";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { Request, Response } from 'express';
+import { getCustomRepository } from 'typeorm';
+import { AdminRepository } from '../repositories/AdminRespository';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 class AdminController {
   /**
@@ -15,20 +15,20 @@ class AdminController {
 
     if (!admin) {
       response.status(400).json({
-        erro: "User not found"
+        erro: 'User not found',
       });
-    };
+    }
 
     const isValidPassword = await bcrypt.compare(password, admin.password);
 
     if (!isValidPassword) {
       return response.status(400).json({
-        error: "User not found"
+        error: 'User not found',
       });
     };
 
     const token = jwt.sign(
-      { id: admin.id }, process.env.SECRET, { expiresIn: "1d" }
+      { id: admin.id }, process.env.SECRET, { expiresIn: '1d' }
     );
 
     return response.status(200).json({
@@ -48,7 +48,7 @@ class AdminController {
 
     if (adminAlreadyExists) {
       return response.status(400).json({
-        error: "Admin already exists"
+        error: 'Admin already exists',
       });
     };
 

@@ -4,19 +4,20 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryColumn
 } from "typeorm";
 import { Admin } from "./Administrator";
+import { v4 as uuid } from "uuid";
 
 @Entity("sales")
 class Sales {
-  @PrimaryGeneratedColumn()
-  readonly id_sales: string;
+  @PrimaryColumn()
+  readonly id_sale: string;
 
-  @Column()
+  @Column({nullable: true})
   value: number;
 
-  @Column()
+  @Column({name: "constumer"})
   costumer: string;
 
   @CreateDateColumn()
@@ -25,9 +26,19 @@ class Sales {
   @Column()
   delivered: boolean;
 
+  @Column()
+  admin_id: string;
+  
   @ManyToOne(() => Admin)
-  @JoinColumn({ name: "id" })
+  @JoinColumn({ name: "admin_id" })
   admin: Admin;
+
+  constructor() {
+    if (!this.id_sale) {
+      this.id_sale = uuid();
+    }
+  }
 }
 
 export { Sales };
+

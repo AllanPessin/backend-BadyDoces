@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { v4 as uuid } from "uuid";
 
 @Entity("admin")
 class Admin {
@@ -20,6 +21,12 @@ class Admin {
   hashPassword () {
     this.password = bcrypt.hashSync(this.password, 8);
   };
+
+  constructor() {
+    if(!this.id) {
+      this.id = uuid();
+    };
+  }
 }
 
 export { Admin };

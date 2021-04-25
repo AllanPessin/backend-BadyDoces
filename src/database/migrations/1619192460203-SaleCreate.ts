@@ -8,8 +8,7 @@ export class SalesCreate1618948291183 implements MigrationInterface {
         columns: [
           {
             name: "id_sale",
-            type: "int",
-            generationStrategy: "increment",
+            type: "uuid",
             isPrimary: true,
             isUnique: true
           },

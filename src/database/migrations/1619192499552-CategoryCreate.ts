@@ -8,8 +8,7 @@ export class Categorie1619148174670 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "int",
-            generationStrategy: "increment",
+            type: "uuid",
             isPrimary: true
           },
           {

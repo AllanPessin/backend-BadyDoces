@@ -9,17 +9,16 @@ export class SaleProductCreate1619189924322 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "int",
-            generationStrategy: "increment",
+            type: "uuid",
             isPrimary: true,
           },
           {
             name: "product_id",
-            type: "int",
+            type: "uuid",
           },
           {
             name: "sale_id",
-            type: "int",
+            type: "uuid",
           },
           {
             name: "value",

@@ -8,8 +8,7 @@ export class Product1619148160847 implements MigrationInterface {
         columns: [
           {
             name: "id_product",
-            type: "int",
-            generationStrategy: "increment",
+            type: "uuid",
             isPrimary: true,
             isUnique: true
           },

@@ -17,7 +17,14 @@
     "rules": {
         "quotes": [2, "double"],
         "semi": [2, "always"],
-        "comma-dangle": ["error", "never"],
-        "properties": "never"
+        "comma-dangle": ["error", {
+            "arrays": "always",
+            "object": "never",
+            "imports": "always"
+        }],
+        "comma-spacing": ["error", { "before": false, "after": true }],
+        "comma-style": ["error", "last"],
+        "camelcase": ["error", {"properties": "never", "ignoreDestructuring": true}]
+        // "properties": "never"
     }
 }

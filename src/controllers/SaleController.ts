@@ -75,23 +75,24 @@ class SaleController {
     
     const saleRepository = await getCustomRepository(SaleRepository);
     const sale = await saleRepository.findOne(request.params.id);
-    console.log(sale);
     if(sale){
       sale.delivered = true;
       const result = await getCustomRepository(SaleRepository).save(sale);
       return response.json(result);
     }
   };
-    /**
-     * Method to count the sales delivered
-     */
+
+  /**
+   * Method to count the sales delivered
+   */
+  
   async countDeliverdeSales (request: Request, response: Response) {
     const saleRepository = await getCustomRepository(SaleRepository);
     const sale = await saleRepository.findAndCount({
       delivered: true
     });
     
-    if (sale[1 ] == 0) {
+    if (sale[1] == 0 || sale[0] == null) {
       return response.status(200).json({
         error: "There is no sale delivered"
       });

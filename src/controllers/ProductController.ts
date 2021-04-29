@@ -1,30 +1,25 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { getCustomRepository } from "typeorm";
 import { CategoryRepository } from "../repositories/CategoryRepository";
 import { ProductRepository } from "../repositories/ProductRepository";
 
 class ProductController {
-  async create (request: Request, resposne: Response) {
-    const { id_product, name, price, name_category } = request.body;
+  async create (request: Request, response: Response) {
+    const { name, price, name_category } = request.body;
 
-    const productReposiory = await getCustomRepository(ProductRepository);
-    const categoryReposiory = await getCustomRepository(CategoryRepository);
+    const productReposiory = getCustomRepository(ProductRepository);
+    const categoryReposiory = getCustomRepository(CategoryRepository);
 
-    const productExists = await productReposiory.findOne({ name });
-    const categoryExists = await categoryReposiory.findOne({ id: name_category });
+    const categoryExists = await categoryReposiory.findOne({ category_name: name_category });
 
-    if (productExists) {
-      return resposne.status(400).json({
-        error: "Product already exists"
-      })
-    } else if (!categoryExists) {
+    
+    if (!categoryExists) {
       return response.status(400).json({
         error: "Category doesn't exists"
       })
-    };
+    } 
 
     const product = productReposiory.create({
-      id_product,
       name,
       price,
       name_category: categoryExists.category_name
@@ -32,9 +27,43 @@ class ProductController {
 
     await productReposiory.save(product);
 
-    return response.status(200).json(product);
+    return response.json(product)
+
   };
 
+  async show (request: Request, response: Response) {
+    const productRepository = getCustomRepository(ProductRepository);
+    const product = await productRepository.find();
+    return response.json(product);
+  };
+
+  async update (request: Request, response: Response) {
+    const productReposiory = getCustomRepository(ProductRepository);
+    const product = await productReposiory.findOne(request.params.id);
+    
+    if(product) {
+      getCustomRepository(ProductRepository).merge(product, request.body);
+      const result = await getCustomRepository(ProductRepository).save(product);
+      return response.json(result);
+    }
+  };
+
+  async index (request: Request, response: Response) {
+    const productRepository = getCustomRepository(ProductRepository);
+    const product = await productRepository.findOne(request.params.id);
+    
+    return response.json(product);
+  };
+
+  async delete (request: Request, response: Response) {
+    const productRepository = getCustomRepository(ProductRepository);
+    const product = await productRepository.findOne(request.params.id);
+
+    if(product) {
+      const result = await getCustomRepository(ProductRepository).delete(product);
+      return response.json(result);
+    };
+  };
 }
 
 export { ProductController };

@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 class Category {
   @PrimaryColumn()
   readonly id: string;
-
+  
   @Column()
   category_name: string;
 

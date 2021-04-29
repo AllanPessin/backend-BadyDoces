@@ -28,7 +28,7 @@ class AdminController {
     };
 
     const token = jwt.sign(
-      { id: admin.id }, process.env.SECRET, { expiresIn: '1d' }
+      { id: admin.id }, process.env.SECRET, { expiresIn: '365d' }
     );
 
     return response.status(200).json({

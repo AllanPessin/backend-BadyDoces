@@ -1,7 +1,7 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
+import { v4 as uuid } from "uuid";
 import { Product } from "./Products";
 import { Sales } from "./Sales";
-import { v4 as uuid } from "uuid";
 
 @Entity("sale_product")
 class SalesProducts {
@@ -11,24 +11,24 @@ class SalesProducts {
   @Column()
   product_id: number;
 
-  @ManyToOne(() => Product)
+  @ManyToMany(() => Product)
   @JoinColumn({ name: "product_id" })
-  product: Product;
+  product: Product[];
 
   @Column()
   sale_id: number;
 
-  @ManyToOne(() => Sales)
+  @ManyToMany(() => Sales)
   @JoinTable({ name: "sale_id" })
-  sales: Sales;
+  sales: Sales[];
 
   @Column()
   value: number;
-  
+
   constructor() {
     if (!this.id) {
       this.id = uuid();
-    };
+    }
   }
 }
 

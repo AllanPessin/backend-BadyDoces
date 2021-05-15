@@ -8,7 +8,8 @@
     "build": "tsc",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "typeorm": "ts-node-dev node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "4.2.1",
     "jsonwebtoken": "^8.5.1",
     "ts-node-dev": "^1.1.6",

@@ -14,10 +14,10 @@ class Sales {
   @PrimaryColumn()
   readonly id_sale: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   value: number;
 
-  @Column({name: "constumer"})
+  @Column({ name: "costumer" })
   costumer: string;
 
   @CreateDateColumn()
@@ -28,7 +28,7 @@ class Sales {
 
   @Column()
   admin_id: string;
-  
+
   @ManyToOne(() => Admin)
   @JoinColumn({ name: "admin_id" })
   admin: Admin;

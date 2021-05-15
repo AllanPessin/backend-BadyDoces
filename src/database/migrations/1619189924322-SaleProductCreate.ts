@@ -45,10 +45,10 @@ export class SaleProductCreate1619189924322 implements MigrationInterface {
         ],
       }),
     );
-  };
+  }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable("sale_product");
-  };
+  }
 
 }

@@ -15,15 +15,15 @@ class Product {
 
   @Column()
   name_category: string;
-  
+
   @ManyToOne(() => Category)
-  @JoinColumn({name: "name_category"})
+  @JoinColumn({ name: "name_category" })
   category: Category
 
   constructor() {
     if (!this.id_product) {
       this.id_product = uuid();
-    };
+    }
   }
 }
 

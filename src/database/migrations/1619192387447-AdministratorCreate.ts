@@ -27,9 +27,9 @@ export class AdministratorCreate1618946759810 implements MigrationInterface {
         ]
       })
     );
-  };
+  }
 
   public async down (queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable("admin");
-  };
-};
+  }
+}

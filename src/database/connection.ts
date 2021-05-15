@@ -4,4 +4,4 @@ try {
   createConnection().then(() => console.log("Conncected Database!"));
 } catch (error) {
   console.log(error);
-};
+}

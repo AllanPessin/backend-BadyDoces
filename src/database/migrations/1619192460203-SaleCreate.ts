@@ -17,7 +17,7 @@ export class SalesCreate1618948291183 implements MigrationInterface {
             type: "money"
           },
           {
-            name: "constumer",
+            name: "costumer",
             type: "varchar"
           },
           {

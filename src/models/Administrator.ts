@@ -18,14 +18,14 @@ class Admin {
 
   @BeforeUpdate()
   @BeforeInsert()
-  hashPassword () {
+  hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);
-  };
+  }
 
   constructor() {
-    if(!this.id) {
+    if (!this.id) {
       this.id = uuid();
-    };
+    }
   }
 }
 

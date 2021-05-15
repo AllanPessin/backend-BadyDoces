@@ -8,7 +8,7 @@ export const authmiddleware = async (request: Request, response: Response, next:
     return response.status(400).json({
       error: "Token is required!"
     });
-  };
+  }
 
   const token = authorization.replace("Bearer", "").trim();
 
@@ -19,5 +19,5 @@ export const authmiddleware = async (request: Request, response: Response, next:
     return response.status(400).json({
       error: "Token invalid!"
     });
-  };
+  }
 };

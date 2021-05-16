@@ -26,6 +26,10 @@ export class SalesCreate1618948291183 implements MigrationInterface {
             default: false
           },
           {
+            name: "amount",
+            type: "int",
+          },
+          {
             name: "created_at",
             type: "timestamp",
             default: "now()"

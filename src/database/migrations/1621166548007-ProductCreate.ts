@@ -21,6 +21,10 @@ export class Product1619148160847 implements MigrationInterface {
             type: "money"
           },
           {
+            name: "amount",
+            type: "int",
+          },
+          {
             name: "name_category",
             type: "varchar"
           }

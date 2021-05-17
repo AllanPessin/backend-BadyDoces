@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import { getCustomRepository } from "typeorm";
 import { CategoryRepository } from "../repositories/CategoryRepository";
 import { ProductRepository } from "../repositories/ProductRepository";
+import productView from "../views/productView";
 
 class ProductController {
   async create(request: Request, response: Response) {
-    const { name, price, name_category } = request.body;
+    const { name, price, name_category, amount } = request.body;
 
     const productReposiory = getCustomRepository(ProductRepository);
     const categoryReposiory = getCustomRepository(CategoryRepository);
@@ -22,12 +23,13 @@ class ProductController {
     const product = productReposiory.create({
       name,
       price,
+      amount,
       name_category: categoryExists.category_name
     });
 
     await productReposiory.save(product);
 
-    return response.json(product)
+    return response.json(productView.render(product))
 
   }
 
@@ -36,7 +38,7 @@ class ProductController {
 
     const product = await productRepository.find();
 
-    return response.json(product);
+    return response.json(productView.renderMany(product));
   }
 
   async update(request: Request, response: Response) {
@@ -46,7 +48,7 @@ class ProductController {
     if (product) {
       getCustomRepository(ProductRepository).merge(product, request.body);
       const result = await getCustomRepository(ProductRepository).save(product);
-      return response.json(result);
+      return response.json(productView.render(result));
     }
   }
 
@@ -54,7 +56,7 @@ class ProductController {
     const productRepository = getCustomRepository(ProductRepository);
     const product = await productRepository.findOne(request.params.id);
 
-    return response.json(product);
+    return response.json(productView.render(product));
   }
 
   async delete(request: Request, response: Response) {
@@ -75,13 +77,13 @@ class ProductController {
       }
     });
 
-    if (!products) {
+    if (products[0] == null) {
       return response.status(400).json({
         error: "Category not found"
       })
     }
     
-    return response.json(products);
+    return response.json(productView.renderMany(products));
   }
 }
 

@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import { AdminRepository } from '../repositories/AdminRespository';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import adminView from '../views/adminView';
 
 class AdminController {
   /**
@@ -70,7 +71,7 @@ class AdminController {
     const adminRepository = getCustomRepository(AdminRepository);
     const admin = await adminRepository.find();
 
-    return response.json(admin);
+    return response.json(adminView.renderMany(admin));
   }
 }
 

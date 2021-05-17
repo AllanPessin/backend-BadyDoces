@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { AdminRepository } from '../repositories/AdminRespository';
 import { SaleRepository } from '../repositories/SaleRepository';
+import saleView from '../views/saleView';
 
 class SaleController {
   /**
@@ -47,7 +48,18 @@ class SaleController {
     const salesRepository = getCustomRepository(SaleRepository);
     const sales = await salesRepository.find();
 
-    return response.json(sales);
+    return response.json(saleView.renderMany(sales));
+  }
+
+  async showSaleByTime(requst: Request, response: Response) {
+    const saleRepository = getCustomRepository(SaleRepository);
+    const sales = await saleRepository.find({
+      order: {
+        created_at: "DESC",
+      }
+    })
+    
+    return response.status(200).json(sales);
   }
 
   /**

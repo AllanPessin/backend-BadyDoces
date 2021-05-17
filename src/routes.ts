@@ -24,9 +24,10 @@ router.get("/show-admin", adminController.show);
 
 router.post("/new-sale", saleController.create);
 router.get("/show-sales", saleController.show);
+router.get("/show-order-sales", saleController.showSaleByTime);
 router.delete("/delete-sale/:id", saleController.delete);
-router.post("/set-delivered/:id", saleController.setDelivered);
-router.get("/count-delivered", saleController.countDeliverdeSales);
+// router.post("/set-delivered/:id", saleController.setDelivered);
+// router.get("/count-delivered", saleController.countDeliverdeSales);
 
 router.post("/new-category", categoryController.create);
 router.get("/show-category", categoryController.show);

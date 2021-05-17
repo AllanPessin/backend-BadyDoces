@@ -14,6 +14,9 @@ class Product {
   price: number;
 
   @Column()
+  amount: number;
+
+  @Column()
   name_category: string;
 
   @ManyToOne(() => Category)

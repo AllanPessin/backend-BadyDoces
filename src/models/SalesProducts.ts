@@ -6,21 +6,21 @@ import { Sales } from "./Sales";
 @Entity("sale_product")
 class SalesProducts {
   @PrimaryColumn()
-  readonly id: string;
+  id: string;
 
   @Column()
   product_id: number;
 
   @ManyToMany(() => Product)
   @JoinColumn({ name: "product_id" })
-  product: Product[];
+  product: Product;
 
   @Column()
   sale_id: number;
 
   @ManyToMany(() => Sales)
   @JoinTable({ name: "sale_id" })
-  sales: Sales[];
+  sales: Sales;
 
   @Column()
   value: number;

@@ -1,20 +1,14 @@
 module.exports = {
   type: "postgres",
-  // url: process.env.DATABASE_URL,
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "31599753",
-  database: "bady-doces",
   url: process.env.DATABASE_URL,
-  // ssl: {
-  //   rejectUnauthorized: false,
-  // },
+  ssl: {
+    rejectUnauthorized: false,
+  },
   entities: [
-    "src/models/**.ts",
+    "src/models/**{.ts,.js}",
   ],
   migrations: [
-    "src/database/migrations/**.ts",
+    "src/database/migrations/**{.ts,.js}",
   ],
   cli: {
     migrationsDir: "src/database/migrations",

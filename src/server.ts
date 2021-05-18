@@ -1,9 +1,12 @@
-import "reflect-metadata";
 import express from "express";
-import "./database/connection"
+import "reflect-metadata";
+import "./database/connection";
 import { router } from "./routes";
+import cors from "cors";
 
 const server = express();
+
+server.use(cors());
 
 server.use(express.json());
 

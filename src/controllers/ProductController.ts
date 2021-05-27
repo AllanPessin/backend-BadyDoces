@@ -6,12 +6,13 @@ import productView from "../views/productView";
 
 class ProductController {
   async create(request: Request, response: Response) {
-    const { name, price, name_category, amount } = request.body;
+    const /**{ name, price, name_category, amount }*/ bodyData  = request.body;
+    const { category_name } = request.params;
 
     const productReposiory = getCustomRepository(ProductRepository);
     const categoryReposiory = getCustomRepository(CategoryRepository);
 
-    const categoryExists = await categoryReposiory.findOne({ category_name: name_category });
+    const categoryExists = await categoryReposiory.findOne( request.body.category_name/**{ category_name: name_category }*/);
 
 
     if (!categoryExists) {
@@ -20,16 +21,16 @@ class ProductController {
       })
     }
 
-    const product = productReposiory.create({
-      name,
-      price,
-      amount,
-      name_category: categoryExists.category_name
+    const product = productReposiory.create({...bodyData, name_category: category_name
+      // name,
+      // price,
+      // amount,
+      // name_category: categoryExists.category_name
     });
 
     await productReposiory.save(product);
 
-    return response.json(productView.render(product))
+    return response.json(product)
 
   }
 

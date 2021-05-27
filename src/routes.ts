@@ -22,7 +22,7 @@ router.post("/session", adminController.authenticate);
 
 router.get("/show-admin", adminController.show);
 
-router.post("/new-sale", saleController.create);
+router.post("/:id/new-sale", saleController.create);
 router.get("/show-sales", saleController.show);
 router.get("/show-order-sales", saleController.showSaleByTime);
 router.delete("/delete-sale/:id", saleController.delete);
@@ -34,7 +34,7 @@ router.get("/show-category", categoryController.show);
 router.patch("/update-category/:name", categoryController.update);
 router.delete("/delete-category/:id", categoryController.delete);
 
-router.post("/new-product", productController.create);
+router.post("/:category_name/new-product", productController.create);
 router.get("/show-product", productController.show);
 router.patch("/update-product/:id", productController.update);
 router.get("/show-product/:id", productController.index);

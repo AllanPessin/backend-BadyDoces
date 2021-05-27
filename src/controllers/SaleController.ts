@@ -9,31 +9,33 @@ class SaleController {
    * Method to create a sale
    */
   async create(request: Request, response: Response) {
-    const { admin_id, id_sale, value, costumer, delivered } = request.body;
+    const bodyData = request.body;
+    const { id } = request.params
 
     const saleRepository = getCustomRepository(SaleRepository);
     const adminRepository = getCustomRepository(AdminRepository);
 
-    const saleAlreadyExists = await saleRepository.findOne({ id_sale });
-    const adminAlreadyExists = await adminRepository.findOne({ id: admin_id });
+    // const saleAlreadyExists = await saleRepository.findOne( request.body.id_sale );
+    const adminAlreadyExists = await adminRepository.findOne( id );
 
-    if (saleAlreadyExists) {
-      return response.status(400).json({
-        error: 'Sale already in system',
-      });
-    } else if (!adminAlreadyExists) {
+    // if (saleAlreadyExists) {
+    //   return response.status(400).json({
+    //     error: 'Sale already in system',
+    //   });
+    // } else 
+    if (!adminAlreadyExists) {
       return response.status(400).json({
         error: 'User not found',
       });
     }
 
-    const sale = saleRepository.create({
-      id_sale,
-      value,
-      costumer,
-      delivered,
-      admin_id: adminAlreadyExists.id
-    });
+    const sale = saleRepository.create({...bodyData, admin_id: id}
+      // id_sale,
+      // value,
+      // costumer,
+      // delivered,
+      // admin_id: adminAlreadyExists.id, 
+    );
 
     await saleRepository.save(sale);
 

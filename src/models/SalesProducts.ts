@@ -13,17 +13,20 @@ class SalesProducts {
 
   @ManyToMany(() => Product)
   @JoinColumn({ name: "product_id" })
-  product: Product;
+  product: Product[];
 
   @Column()
   sale_id: number;
 
   @ManyToMany(() => Sales)
   @JoinTable({ name: "sale_id" })
-  sales: Sales;
+  sales: Sales[];
 
   @Column()
   value: number;
+
+  @Column()
+  amount: number;
 
   constructor() {
     if (!this.id) {

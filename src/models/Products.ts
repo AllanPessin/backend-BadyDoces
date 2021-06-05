@@ -17,10 +17,13 @@ class Product {
   amount: number;
 
   @Column()
-  name_category: string;
+  name_category: string
 
   @ManyToOne(() => Category)
-  @JoinColumn({ name: "name_category" })
+  @JoinColumn({ 
+    name: "name_category",
+    referencedColumnName: "category_name" 
+  })
   category: Category
 
   constructor() {

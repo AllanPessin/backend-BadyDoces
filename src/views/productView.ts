@@ -6,7 +6,7 @@ export default {
       id: product.id_product,
       name: product.name,
       amount: product.amount,
-      category: product.name_category,
+      name_category: product.name_category,
       price: product.price
     }
   },

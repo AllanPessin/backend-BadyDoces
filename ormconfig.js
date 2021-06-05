@@ -5,10 +5,10 @@ module.exports = {
     rejectUnauthorized: false,
   },
   entities: [
-    "dist/models/**{.ts,.js}",
+    "dist/models/**.{ts, js}",
   ],
   migrations: [
-    "dist/database/migrations/**{.ts,.js}",
+    "dist/database/migrations/**.{ts, js}",
   ],
   cli: {
     migrationsDir: "src/database/migrations",

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, PrimaryColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Product } from "./Products";
 import { Sales } from "./Sales";
@@ -12,14 +12,20 @@ class SalesProducts {
   product_id: number;
 
   @ManyToMany(() => Product)
-  @JoinColumn({ name: "product_id" })
+  @JoinColumn({
+    name: "product_id",
+    referencedColumnName: "id_product"
+  })
   product: Product[];
 
   @Column()
   sale_id: number;
 
   @ManyToMany(() => Sales)
-  @JoinTable({ name: "sale_id" })
+  @JoinColumn({
+    name: "sale_id",
+    referencedColumnName: "id_sale"
+  })
   sales: Sales[];
 
   @Column()
@@ -36,3 +42,4 @@ class SalesProducts {
 }
 
 export { SalesProducts };
+

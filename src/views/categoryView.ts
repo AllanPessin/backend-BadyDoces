@@ -4,7 +4,7 @@ export default {
   render(category: Category) {
     return {
       id: category.id,
-      name: category.category_name
+      category_name: category.category_name
     }
   },
   renderMany(category: Category[]) {

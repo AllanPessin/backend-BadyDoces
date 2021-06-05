@@ -9,14 +9,13 @@ class SaleController {
    * Method to create a sale
    */
   async create(request: Request, response: Response) {
-    const bodyData = request.body;
-    const { id } = request.params
+    const { admin_id, id_sale, value, costumer, delivered } = request.body
 
     const saleRepository = getCustomRepository(SaleRepository);
     const adminRepository = getCustomRepository(AdminRepository);
 
     // const saleAlreadyExists = await saleRepository.findOne( request.body.id_sale );
-    const adminAlreadyExists = await adminRepository.findOne( id );
+    const adminAlreadyExists = await adminRepository.findOne({ id: admin_id});
 
     // if (saleAlreadyExists) {
     //   return response.status(400).json({
@@ -29,13 +28,13 @@ class SaleController {
       });
     }
 
-    const sale = saleRepository.create({...bodyData, admin_id: id}
-      // id_sale,
-      // value,
-      // costumer,
-      // delivered,
-      // admin_id: adminAlreadyExists.id, 
-    );
+    const sale = saleRepository.create({
+      id_sale,
+      value,
+      costumer,
+      delivered,
+      admin_id: adminAlreadyExists.id, 
+    });
 
     await saleRepository.save(sale);
 

@@ -5,9 +5,9 @@ import categoryView from "../views/categoryView";
 
 class CategoryController {
   async create(request: Request, response: Response) {
-    const name_category = request.body;
+    const category_name = request.body;
     const categoryRepository = getCustomRepository(CategoryRepository);
-    const categoryExists = await categoryRepository.findOne(name_category);
+    const categoryExists = await categoryRepository.findOne(category_name);
 
     if (categoryExists) {
       return response.status(200).json({
@@ -15,7 +15,7 @@ class CategoryController {
       })
     }
 
-    const category = categoryRepository.create(name_category);
+    const category = categoryRepository.create(category_name);
 
     await categoryRepository.save(category);
 
@@ -30,7 +30,7 @@ class CategoryController {
 
   async update(request: Request, response: Response) {
     const categoryRepository = getCustomRepository(CategoryRepository);
-    const category = await categoryRepository.findOne(request.params.category_name);
+    const category = await categoryRepository.findOne(request.params.id);
 
     if (category) {
       getCustomRepository(CategoryRepository).merge(category, request.body);
@@ -46,8 +46,6 @@ class CategoryController {
   async delete(request: Request, response: Response) {
     const categoryRepository = getCustomRepository(CategoryRepository);
     const category = await categoryRepository.findOne(request.params.id);
-
-    console.log(category);
 
     if (category) {
       const result = await getCustomRepository(CategoryRepository).delete(category);

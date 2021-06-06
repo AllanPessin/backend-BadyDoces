@@ -34,8 +34,7 @@ class AdminController {
 
     return response.status(200).json({
       token,
-      admin,
-      email
+      admin
     });
   }
   

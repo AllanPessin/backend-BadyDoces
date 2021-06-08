@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { AdminRepository } from '../repositories/AdminRespository';
+import { ProductRepository } from '../repositories/ProductRepository';
 import { SaleRepository } from '../repositories/SaleRepository';
 import saleView from '../views/saleView';
 
@@ -9,13 +10,19 @@ class SaleController {
    * Method to create a sale
    */
   async create(request: Request, response: Response) {
-    const { admin_id, id_sale, value, costumer, delivered } = request.body
+    const { admin_id, value, costumer, amount, id_product } = request.body
 
-    const saleRepository = getCustomRepository(SaleRepository);
-    const adminRepository = getCustomRepository(AdminRepository);
+    console.time("promisse")
+    const [saleRepository, adminRepository, productRepository] = await Promise.all([
+       getCustomRepository(SaleRepository),
+       getCustomRepository(AdminRepository),
+       getCustomRepository(ProductRepository),
+    ])
+    console.timeEnd("promisse")
 
     // const saleAlreadyExists = await saleRepository.findOne( request.body.id_sale );
     const adminAlreadyExists = await adminRepository.findOne({ id: admin_id});
+    const product = await productRepository.findOne(id_product)
 
     // if (saleAlreadyExists) {
     //   return response.status(400).json({
@@ -28,11 +35,13 @@ class SaleController {
       });
     }
 
+    product.amount = product.amount - amount
+
+    productRepository.save({...product})
+
     const sale = saleRepository.create({
-      id_sale,
       value,
       costumer,
-      delivered,
       admin_id: adminAlreadyExists.id, 
     });
 
@@ -112,6 +121,21 @@ class SaleController {
       });
     }
     return response.json(sale);
+  }
+  async showSaleByCostumer(request: Request, response: Response) {
+    const saleRepository = await getCustomRepository(SaleRepository);
+    const sales = await saleRepository.find({
+      where: {
+        costumer: request.params.costumer
+      }
+    })
+    if (!sales) {
+      return response.status(400).json({
+        error: "Costumer deost'n exists"
+      })
+    }
+
+    return response.status(200).json(saleView.renderMany(sales))
   }
 }
 

@@ -12,32 +12,34 @@ class SaleController {
   async create(request: Request, response: Response) {
     const { admin_id, value, costumer, amount, id_product } = request.body
 
-    console.time("promisse")
     const [saleRepository, adminRepository, productRepository] = await Promise.all([
        getCustomRepository(SaleRepository),
        getCustomRepository(AdminRepository),
        getCustomRepository(ProductRepository),
     ])
-    console.timeEnd("promisse")
 
     // const saleAlreadyExists = await saleRepository.findOne( request.body.id_sale );
     const adminAlreadyExists = await adminRepository.findOne({ id: admin_id});
     const product = await productRepository.findOne(id_product)
 
-    // if (saleAlreadyExists) {
-    //   return response.status(400).json({
-    //     error: 'Sale already in system',
-    //   });
-    // } else 
     if (!adminAlreadyExists) {
       return response.status(400).json({
         error: 'User not found',
       });
     }
-
-    product.amount = product.amount - amount
-
-    productRepository.save({...product})
+    
+    if(!product) {
+      return response.status(400).json({
+        error: "Product doesn't exists"
+      });
+    } else if(amount > product.amount) {
+      return response.status(400).json({
+       error: "Amount greater than stock"
+     });
+    } else {
+      product.amount = product.amount - amount  
+      productRepository.save({...product});
+    }
 
     const sale = saleRepository.create({
       value,
@@ -140,4 +142,3 @@ class SaleController {
 }
 
 export { SaleController };
-

@@ -8,9 +8,11 @@ class SaleProduct {
   async create(request: Request, response: Response) {
     const { id_product, id_sale } = request.body;
 
-    const saleRepository = getCustomRepository(SaleRepository);
-    const productRepository = getCustomRepository(ProductRepository);
-    const saleProductRepository = getCustomRepository(SaleProductRepository);
+    const [ saleRepository, productRepository, saleProductRepository ] = await Promise.all([
+      getCustomRepository(SaleRepository),
+      getCustomRepository(ProductRepository),
+      getCustomRepository(SaleProductRepository),
+    ])
 
     const sale = await saleRepository.findOne({ id_sale });
     

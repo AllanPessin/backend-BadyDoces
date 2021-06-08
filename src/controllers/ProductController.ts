@@ -8,8 +8,10 @@ class ProductController {
   async create(request: Request, response: Response) {
     const { name, price, name_category, amount } = request.body;
 
-    const productReposiory = getCustomRepository(ProductRepository);
-    const categoryReposiory = getCustomRepository(CategoryRepository);
+    const [ productReposiory, categoryReposiory ] = await Promise.all([
+      getCustomRepository(ProductRepository),
+      getCustomRepository(CategoryRepository)
+    ])
 
     const categoryExists = await categoryReposiory.findOne({ category_name: name_category });
        

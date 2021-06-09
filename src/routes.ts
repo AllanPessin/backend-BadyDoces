@@ -19,6 +19,11 @@ router.get("/", (request: Request, response: Response) => {
 router.post("/create-admin", adminController.create);
 router.post("/session", adminController.authenticate);
 
+/**
+ * Routes below middleware require the token
+ */
+ router.use(authmiddleware);
+ 
 router.get("/show-admin", adminController.show);
 
 router.post("/new-sale", saleController.create);
@@ -40,10 +45,5 @@ router.put("/update-product/:id", productController.update);
 router.get("/show-product/:id", productController.index);
 router.delete("/delete-product/:id", productController.delete);
 router.get("/show-product-category/:name_category", productController.showProductByCategory);
-
-/**
- * Routes below middleware require the token
- */
-router.use(authmiddleware);
 
 export { router };

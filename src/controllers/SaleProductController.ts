@@ -56,15 +56,4 @@ class SaleProduct {
   }
 }
 
-//   async showByCostumer(request: Request, response: Response) {
-//     const saleProductRepository = getCustomRepository(SaleProductRepository);
-//     const saleProduct = await saleProductRepository.find({
-//       where: {
-//         costumer: request.params.costumer
-//       }
-//     });
-//     return response.json(saleProduct);
-//   }
-// }
-
 export { SaleProduct };

@@ -78,7 +78,7 @@ class ProductController {
       }
     });
 
-    if (products.length < 1) {
+    if (products.length <= 0) {
       return response.status(400).json({
         error: "Category not found"
       })

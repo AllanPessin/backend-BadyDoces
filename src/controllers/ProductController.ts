@@ -74,11 +74,11 @@ class ProductController {
     const productReposiory = getCustomRepository(ProductRepository);
     const products = await productReposiory.find({
       where: {
-        category: request.params.name_category
+        name_category: request.params.name_category
       }
     });
 
-    if (products[0] == null) {
+    if (products.length < 1) {
       return response.status(400).json({
         error: "Category not found"
       })

@@ -80,7 +80,7 @@ class ProductController {
 
     if (products.length <= 0) {
       return response.status(400).json({
-        error: "Category not found"
+        error: "Product not found on this category"
       })
     }
     

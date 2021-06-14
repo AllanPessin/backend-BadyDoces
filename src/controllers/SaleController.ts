@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { AdminRepository } from '../repositories/AdminRespository';
 import { ProductRepository } from '../repositories/ProductRepository';
-import { SaleProductRepository } from '../repositories/SaleProductRepositrory';
 import { SaleRepository } from '../repositories/SaleRepository';
 import saleView from '../views/saleView';
 
@@ -28,11 +27,11 @@ class SaleController {
   async create(request: Request, response: Response) {
     const { admin_id, costumer, id_product } = request.body as SaleProps
 
-    const [saleRepository, adminRepository, productRepository, saleProductRepository] = await Promise.all([
+    const [saleRepository, adminRepository, productRepository, /**saleProductRepository*/] = await Promise.all([
       getCustomRepository(SaleRepository),
       getCustomRepository(AdminRepository),
       getCustomRepository(ProductRepository),
-      getCustomRepository(SaleProductRepository)
+      // getCustomRepository(SaleProductRepository)
     ])
 
     const adminAlreadyExists = await adminRepository.findOne({ id: admin_id });
@@ -71,14 +70,14 @@ class SaleController {
 
       await saleRepository.save(sale);
 
-      for (const p3 of id_product) {
-        const saleProduct = saleProductRepository.create({
-          sale_id: sale.id_sale,
-          product_id: p3.id_product,
-          value: p3.amount * p3.price
-        });
-        await saleProductRepository.save(saleProduct)
-      }
+      // for (const p3 of id_product) {
+      //   const saleProduct = saleProductRepository.create({
+      //     sale_id: sale.id_sale,
+      //     product_id: p3.id_product,
+      //     value: p3.amount * p3.price
+      //   });
+      //   await saleProductRepository.save(saleProduct)
+      // }
 
       return response.status(200).json(sale);
 

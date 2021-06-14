@@ -9,24 +9,24 @@ class SalesProducts {
   id: string;
 
   @Column()
-  product_id: number;
+  product_id: string;
 
   @ManyToMany(() => Product)
   @JoinColumn({
     name: "product_id",
     referencedColumnName: "id_product"
   })
-  product: Product[];
+  product: Product;
 
   @Column()
-  sale_id: number;
+  sale_id: string;
 
   @ManyToMany(() => Sales)
   @JoinColumn({
     name: "sale_id",
     referencedColumnName: "id_sale"
   })
-  sales: Sales[];
+  sales: Sales;
 
   @Column()
   value: number;
